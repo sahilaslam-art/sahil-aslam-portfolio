@@ -6,6 +6,11 @@ interface ContactModalProps {
   onClose: () => void;
 }
 
+// API URL - use Render production URL or localhost for development
+const API_URL = import.meta.env.PROD 
+  ? 'https://sahil-aslam-portfolio.onrender.com/api/contact'
+  : 'http://localhost:3001/api/contact';
+
 const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState({
@@ -28,7 +33,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
     setFormState('submitting');
 
     try {
-      const response = await fetch('http://localhost:3001/api/contact', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
