@@ -10,7 +10,21 @@ console.log('GMAIL_USER:', process.env.GMAIL_USER);
 console.log('GMAIL_PASSWORD exists:', !!process.env.GMAIL_PASSWORD);
 
 const app = express();
-app.use(cors());
+
+// Configure CORS to allow Vercel frontend
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://sahil-aslam-portfolio.vercel.app',
+    'https://sahil-aslam-portfolio.netlify.app',
+  ],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Configure Nodemailer with Gmail
