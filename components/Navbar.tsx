@@ -4,10 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PERSONAL_INFO } from '../constants';
 
 interface NavbarProps {
-  onOpenContact: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
+const Navbar: React.FC<NavbarProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
@@ -15,12 +14,6 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
     { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' }
   ];
-
-  const handleHireMe = (e: React.MouseEvent) => {
-    e.preventDefault();
-    onOpenContact();
-    setIsOpen(false);
-  };
 
   return (
     <>
@@ -44,22 +37,26 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               </a>
             ))}
           </div>
-          <button 
-            onClick={handleHireMe}
+          <a 
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.contact.email}&su=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.%0A%0A`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="border border-white/20 px-6 py-2.5 rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 font-semibold"
           >
-            Hire Me
-          </button>
+            Work with us
+          </a>
         </div>
 
         {/* Mobile Navbar Buttons */}
         <div className="md:hidden flex items-center gap-4">
-          <button 
-            onClick={handleHireMe}
+          <a 
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.contact.email}&su=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.%0A%0A`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="border border-white/20 px-4 py-1.5 rounded-full text-[9px] uppercase tracking-[0.15em] font-bold hover:bg-white hover:text-black transition-all duration-300"
           >
-            Hire
-          </button>
+            Work with us
+          </a>
           <button 
             onClick={() => setIsOpen(!isOpen)}
             className="text-[10px] uppercase tracking-widest font-medium hover:opacity-50 transition-opacity min-w-[45px] text-right"
@@ -94,12 +91,14 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
               ))}
             </div>
             
-            <button 
-              onClick={handleHireMe}
-              className="mt-8 border border-white/20 px-10 py-4 rounded-full text-xs uppercase tracking-[0.3em] font-medium"
+            <a 
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.contact.email}&su=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.%0A%0A`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 border border-white/20 px-10 py-4 rounded-full text-xs uppercase tracking-[0.3em] font-medium inline-block"
             >
-              Hire Me
-            </button>
+              Work with us
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

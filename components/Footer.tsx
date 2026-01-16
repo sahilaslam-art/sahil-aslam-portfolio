@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { PERSONAL_INFO } from '../constants';
 
 interface FooterProps {
-  onOpenContact: () => void;
+  onOpenContact?: () => void;
 }
 
 const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
@@ -23,12 +23,14 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           className="mb-32"
         >
           <p className="text-sm uppercase tracking-[0.4em] opacity-40 mb-12 font-medium">Have a project in mind?</p>
-          <button 
-            onClick={onOpenContact}
+          <a 
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.contact.email}&su=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.%0A%0A`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group block text-[10vw] md:text-[8vw] font-serif italic leading-none hover:pl-8 transition-all duration-700 text-left"
           >
             Let's talk <span className="not-italic text-zinc-800 transition-colors group-hover:text-white">→</span>
-          </button>
+          </a>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-24 mb-24">
@@ -36,7 +38,9 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
             <h4 className="text-xs uppercase tracking-widest opacity-30 mb-6 font-medium">Contact</h4>
             <div className="flex flex-col gap-2">
               <a 
-                href={`mailto:${PERSONAL_INFO.contact.email}`} 
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${PERSONAL_INFO.contact.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-lg hover:opacity-50 transition-opacity"
               >
                 {PERSONAL_INFO.contact.email}
