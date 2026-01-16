@@ -24,7 +24,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
         >
           <p className="text-sm uppercase tracking-[0.4em] opacity-40 mb-12 font-medium">Have a project in mind?</p>
           <a 
-            href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.`}
+            href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project Inquiry&body=Hi Sahil,%0A%0AI have a project I'd like to discuss with you.`}
             className="group block text-[10vw] md:text-[8vw] font-serif italic leading-none hover:pl-8 transition-all duration-700 text-left"
           >
             Let's talk <span className="not-italic text-zinc-800 transition-colors group-hover:text-white">→</span>
@@ -36,7 +36,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
             <h4 className="text-xs uppercase tracking-widest opacity-30 mb-6 font-medium">Contact</h4>
             <div className="flex flex-col gap-2">
               <a 
-                href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.`}
+                href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project Inquiry&body=Hi Sahil,%0A%0AI have a project I'd like to discuss with you.`}
                 className="text-lg hover:opacity-50 transition-opacity"
               >
                 {PERSONAL_INFO.contact.email}

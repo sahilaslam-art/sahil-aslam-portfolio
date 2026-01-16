@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             ))}
           </div>
           <a 
-            href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.`}
+            href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project Inquiry&body=Hi Sahil,%0A%0AI have a project I'd like to discuss with you.`}
             className="border border-white/20 px-6 py-2.5 rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 font-semibold"
           >
             Work with us
@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         {/* Mobile Navbar Buttons */}
         <div className="md:hidden flex items-center gap-4">
           <a 
-            href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.`}
+            href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project Inquiry&body=Hi Sahil,%0A%0AI have a project I'd like to discuss with you.`}
             className="border border-white/20 px-4 py-1.5 rounded-full text-[9px] uppercase tracking-[0.15em] font-bold hover:bg-white hover:text-black transition-all duration-300"
           >
             Work with us
@@ -88,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             </div>
             
             <a 
-              href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project%20Inquiry&body=Hi%20Sahil%2C%0A%0AI%20have%20a%20project%20I%27d%20like%20to%20discuss%20with%20you.`}
+              href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project Inquiry&body=Hi Sahil,%0A%0AI have a project I'd like to discuss with you.`}
               className="mt-8 border border-white/20 px-10 py-4 rounded-full text-xs uppercase tracking-[0.3em] font-medium inline-block"
             >
               Work with us

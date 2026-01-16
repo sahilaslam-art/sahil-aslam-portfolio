@@ -13,9 +13,9 @@ export const PERSONAL_INFO = {
     phone: "+91 62058 35321",
     location: "India",
     socials: {
-      linkedin: "https://linkedin.com/in/sahilaslam",
-      github: "https://github.com/sahilaslam754",
-      twitter: "https://twitter.com/sahilaslam"
+      linkedin: "https://www.linkedin.com/in/sahil-aslam-105640374/",
+      github: "https://github.com/sahilaslam-art",
+      twitter: "https://x.com/sahilaslam49205"
     }
   }
 };
