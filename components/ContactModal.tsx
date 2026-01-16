@@ -1,14 +1,10 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
 
 interface ContactModalProps {
   onClose: () => void;
 }
-
-// Initialize EmailJS with your public key
-emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -32,23 +28,27 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
     setFormState('submitting');
 
     try {
-      // Send email using EmailJS
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          project_type: formData.projectType,
+      const response = await fetch('http://localhost:3001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          projectType: formData.projectType,
           message: formData.message,
-          to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL
-        }
-      );
+        }),
+      });
 
-      setFormState('success');
-      setFormData({ name: '', email: '', projectType: 'Web Application', message: '' });
+      if (response.ok) {
+        setFormState('success');
+        setFormData({ name: '', email: '', projectType: 'Web Application', message: '' });
+      } else {
+        throw new Error('Failed to send');
+      }
     } catch (error) {
-      console.error('Failed to send email:', error);
+      console.error('❌ Failed to send email:', error);
       setFormState('error');
     }
   };
