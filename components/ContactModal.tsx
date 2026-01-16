@@ -1,21 +1,56 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 interface ContactModalProps {
   onClose: () => void;
 }
 
-const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+// Initialize EmailJS with your public key
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
-  const handleSubmit = (e: React.FormEvent) => {
+const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    projectType: 'Web Application',
+    message: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState('submitting');
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      // Send email using EmailJS
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          project_type: formData.projectType,
+          message: formData.message,
+          to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL
+        }
+      );
+
       setFormState('success');
-    }, 1500);
+      setFormData({ name: '', email: '', projectType: 'Web Application', message: '' });
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setFormState('error');
+    }
   };
 
   return (
@@ -50,6 +85,17 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
               Return Home
             </button>
           </div>
+        ) : formState === 'error' ? (
+          <div className="text-center py-12 md:py-20">
+            <h2 className="text-4xl md:text-6xl font-serif italic mb-6 text-red-500">Error</h2>
+            <p className="text-base md:text-lg opacity-60 max-w-sm mx-auto">Failed to send message. Please try again.</p>
+            <button 
+              onClick={() => setFormState('idle')}
+              className="mt-8 md:mt-12 text-[10px] uppercase tracking-widest font-semibold hover:opacity-50 transition-opacity"
+            >
+              Try Again
+            </button>
+          </div>
         ) : (
           <>
             <div className="mb-8 md:mb-12">
@@ -64,6 +110,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
                   <input 
                     required 
                     type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     placeholder="John Doe"
                     className="bg-transparent border-b border-white/10 py-2 focus:border-white transition-colors outline-none text-base md:text-lg font-light"
                   />
@@ -73,6 +122,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
                   <input 
                     required 
                     type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="john@example.com"
                     className="bg-transparent border-b border-white/10 py-2 focus:border-white transition-colors outline-none text-base md:text-lg font-light"
                   />
@@ -83,6 +135,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
                 <label className="text-[10px] uppercase tracking-widest opacity-30 font-medium">Project Type</label>
                 <div className="relative">
                   <select 
+                    name="projectType"
+                    value={formData.projectType}
+                    onChange={handleInputChange}
                     className="w-full bg-transparent border-b border-white/10 py-2 focus:border-white transition-colors outline-none text-base md:text-lg font-light appearance-none cursor-pointer"
                   >
                     <option className="bg-[#1a1a1a]">Web Application</option>
@@ -103,6 +158,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
                 <textarea 
                   required 
                   rows={2} 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   placeholder="Tell me about your vision..."
                   className="bg-transparent border-b border-white/10 py-2 focus:border-white transition-colors outline-none text-base md:text-lg font-light resize-none md:rows-3"
                 />
