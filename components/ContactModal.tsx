@@ -13,6 +13,7 @@ const API_URL = import.meta.env.PROD
 
 const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,8 +32,13 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState('submitting');
+    setErrorMessage('');
 
     try {
+      // Create abort controller with 10 second timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
@@ -44,16 +50,31 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
           projectType: formData.projectType,
           message: formData.message,
         }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
+
       if (response.ok) {
+        const data = await response.json();
         setFormState('success');
         setFormData({ name: '', email: '', projectType: 'Web Application', message: '' });
       } else {
-        throw new Error('Failed to send');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send email');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ Failed to send email:', error);
+      
+      // Different error messages based on error type
+      if (error.name === 'AbortError') {
+        setErrorMessage('Request timeout - Server may be offline. Please try again.');
+      } else if (error instanceof TypeError) {
+        setErrorMessage('Network error - Unable to reach server. Make sure it\'s running.');
+      } else {
+        setErrorMessage(error.message || 'Failed to send message. Please try again.');
+      }
+      
       setFormState('error');
     }
   };
@@ -93,7 +114,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
         ) : formState === 'error' ? (
           <div className="text-center py-12 md:py-20">
             <h2 className="text-4xl md:text-6xl font-serif italic mb-6 text-red-500">Error</h2>
-            <p className="text-base md:text-lg opacity-60 max-w-sm mx-auto">Failed to send message. Please try again.</p>
+            <p className="text-base md:text-lg opacity-60 max-w-sm mx-auto mb-4">{errorMessage}</p>
             <button 
               onClick={() => setFormState('idle')}
               className="mt-8 md:mt-12 text-[10px] uppercase tracking-widest font-semibold hover:opacity-50 transition-opacity"
