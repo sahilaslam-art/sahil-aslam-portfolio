@@ -12,6 +12,15 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const openGmailCompose = () => {
+    const subject = encodeURIComponent("Project Inquiry");
+    const body = encodeURIComponent(
+      "Hi Sahil,\n\nI would like to work with you.\n\nThanks"
+    );
+    const mailtoURL = `mailto:${PERSONAL_INFO.contact.email}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoURL;
+  };
+
   return (
     <footer id="contact" className="px-6 md:px-12 lg:px-20 py-20 pb-12 bg-[#0a0a0a] border-t border-white/5">
       <div className="max-w-[1200px] mx-auto">
@@ -23,24 +32,24 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           className="mb-32"
         >
           <p className="text-sm uppercase tracking-[0.4em] opacity-40 mb-12 font-medium">Have a project in mind?</p>
-          <a 
-            href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project Inquiry&body=Hi Sahil,%0A%0AI have a project I'd like to discuss with you.`}
+          <button 
+            onClick={openGmailCompose}
             className="group block text-[10vw] md:text-[8vw] font-serif italic leading-none hover:pl-8 transition-all duration-700 text-left"
           >
             Let's talk <span className="not-italic text-zinc-800 transition-colors group-hover:text-white">→</span>
-          </a>
+          </button>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-24 mb-24">
           <div>
             <h4 className="text-xs uppercase tracking-widest opacity-30 mb-6 font-medium">Contact</h4>
             <div className="flex flex-col gap-2">
-              <a 
-                href={`mailto:${PERSONAL_INFO.contact.email}?subject=Project Inquiry&body=Hi Sahil,%0A%0AI have a project I'd like to discuss with you.`}
-                className="text-lg hover:opacity-50 transition-opacity"
+              <button 
+                onClick={openGmailCompose}
+                className="text-lg hover:opacity-50 transition-opacity bg-transparent border-none cursor-pointer p-0"
               >
                 {PERSONAL_INFO.contact.email}
-              </a>
+              </button>
               <a 
                 href={`tel:${PERSONAL_INFO.contact.phone.replace(/\s+/g, '')}`} 
                 className="text-lg hover:opacity-50 transition-opacity"
