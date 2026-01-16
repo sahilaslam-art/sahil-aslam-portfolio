@@ -1,51 +1,20 @@
-# 🚀 Sahil Aslam – Full Stack Portfolio
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-A modern **full-stack developer portfolio** built with **React + TypeScript + Vite** on the frontend and **Node.js + Express + MongoDB Atlas** on the backend.
+# Run and deploy your AI Studio app
 
-This project includes a fully working **Hire Me / Contact system** where:
-- User submits a form from the website
-- Data is saved in MongoDB
-- Email is delivered directly to Gmail inbox using Nodemailer
+This contains everything you need to run your app locally.
 
----
+View your app in AI Studio: https://ai.studio/apps/drive/1JN7yojkF2goo0V6We09GvkKB1zJVUN04
 
-## ✨ Features
+## Run Locally
 
-### 🌐 Frontend
-- React + TypeScript + Vite
-- Modern UI with animations (Framer Motion)
-- Responsive design
-- Contact / Hire Me modal
-- Real API integration (no dummy forms)
+**Prerequisites:**  Node.js
 
-### ⚙️ Backend
-- Node.js + Express + TypeScript
-- MongoDB Atlas (cloud database)
-- REST API (`/api/enquiry`)
-- Clean folder structure
-- Production-ready setup
 
-### 📧 Email Integration
-- Nodemailer
-- Gmail App Password authentication
-- Email sent on every enquiry
-- Secure `.env` configuration
-
----
-
-## 🧩 Tech Stack
-
-**Frontend**
-- React
-- TypeScript
-- Vite
-- Framer Motion
-
-**Backend**
-- Node.js
-- Express
-- TypeScript
-- MongoDB Atlas
-- Nodemailer
-
----
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

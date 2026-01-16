@@ -1,43 +1,21 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { sendEnquiry } from '../src/api';
 
 interface ContactModalProps {
   onClose: () => void;
 }
 
 const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('✅ Form submit triggered', formData);
     setFormState('submitting');
-    
-    try {
-      console.log('📡 Sending API request...');
-      const response = await sendEnquiry(formData);
-      console.log('✅ API Response:', response);
+    // Simulate API call
+    setTimeout(() => {
       setFormState('success');
-    } catch (error) {
-      console.error('❌ API Error:', error);
-      setFormState('error');
-      setTimeout(() => setFormState('idle'), 3000);
-    }
+    }, 1500);
   };
 
   return (
@@ -72,17 +50,6 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
               Return Home
             </button>
           </div>
-        ) : formState === 'error' ? (
-          <div className="text-center py-12 md:py-20">
-            <h2 className="text-4xl md:text-6xl font-serif italic mb-6 text-red-500">Oops!</h2>
-            <p className="text-base md:text-lg opacity-60 max-w-sm mx-auto">Something went wrong. Please try again.</p>
-            <button 
-              onClick={() => setFormState('idle')}
-              className="mt-8 md:mt-12 text-[10px] uppercase tracking-widest font-semibold hover:opacity-50 transition-opacity"
-            >
-              Back to Form
-            </button>
-          </div>
         ) : (
           <>
             <div className="mb-8 md:mb-12">
@@ -97,9 +64,6 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
                   <input 
                     required 
                     type="text" 
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
                     placeholder="John Doe"
                     className="bg-transparent border-b border-white/10 py-2 focus:border-white transition-colors outline-none text-base md:text-lg font-light"
                   />
@@ -109,9 +73,6 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
                   <input 
                     required 
                     type="email" 
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
                     placeholder="john@example.com"
                     className="bg-transparent border-b border-white/10 py-2 focus:border-white transition-colors outline-none text-base md:text-lg font-light"
                   />
@@ -141,9 +102,6 @@ const ContactModal: React.FC<ContactModalProps> = ({ onClose }) => {
                 <label className="text-[10px] uppercase tracking-widest opacity-30 font-medium">Your Message</label>
                 <textarea 
                   required 
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
                   rows={2} 
                   placeholder="Tell me about your vision..."
                   className="bg-transparent border-b border-white/10 py-2 focus:border-white transition-colors outline-none text-base md:text-lg font-light resize-none md:rows-3"
